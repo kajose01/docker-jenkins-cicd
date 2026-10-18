@@ -1,0 +1,42 @@
+jenkins:
+  systemMessage: "CI/CD demo: Docker + Jenkins + Swarm"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: ${JENKINS_ADMIN_PASSWORD}
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: dockerhub
+              username: kaj1
+              password: ${DOCKERHUB_TOKEN}
+              description: Docker Hub access token
+unclassified:
+  location:
+    url: http://localhost:8081/
+jobs:
+  - script: |
+      pipelineJob('docker-cicd') {
+        description('Test, build, push and deploy the sample app')
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('https://github.com/kajose01/docker-jenkins-cicd.git') }
+                branch('*/main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+        triggers { scm('* * * * *') }
+      }

@@ -1,0 +1,17 @@
+services:
+  app:
+    image: kaj1/cicd-demo:${IMAGE_TAG:-latest}
+    ports:
+      - "8095:3000"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+        failure_action: rollback
+        monitor: 10s
+      rollback_config: { order: start-first }
+      restart_policy: { condition: on-failure, delay: 3s }
+      resources:
+        limits: { cpus: "0.25", memory: 64M }

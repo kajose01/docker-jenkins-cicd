@@ -1,0 +1,16 @@
+# Runs Jenkins itself (not the sample app)
+services:
+  jenkins:
+    build: ./jenkins
+    image: kaj1/jenkins-cicd:1.0.0
+    ports:
+      - "8081:8080"
+    env_file: .env
+    group_add:
+      - "${DOCKER_GID}"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  jenkins_home:
