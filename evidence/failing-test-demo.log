@@ -1,0 +1,34 @@
+== BEFORE: last build #2 = SUCCESS, app serving "build":"2"
+
+== 1. Push a commit that breaks the greeting tests
+ app/src/lib.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+build #3 result: FAILURE
+[2026-10-19T21:13:12.875Z] #10 0.813 # pass 2
+[2026-10-19T21:13:12.875Z] #10 0.813 # fail 3
+[2026-10-19T21:13:12.875Z] 0.813 # fail 3
+Stage "Build" skipped due to earlier failure(s)
+Stage "Push" skipped due to earlier failure(s)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
+app still serving: "build":"2"   (must still be build #2)
+cicd_app 2/2 kaj1/cicd-demo:2
+
+== 2. Revert the bad commit
+build #4 result: FAILURE
+[2026-10-19T21:16:12.280Z] #10 0.647 # pass 5
+[2026-10-19T21:16:12.280Z] #10 0.647 # fail 0
+Finished: FAILURE
+app now serving: "build":"2"   (must be build #4)
+cicd_app 2/2 kaj1/cicd-demo:2
+
+DONE
+
+NOTE: build #4 (after the revert) passed all tests but failed in the Push stage because the Docker Hub
+token had stopped working (unauthorized). Deploy was skipped, so the running app stayed on build #2.
+After replacing the token, build #5 ran from the same commit and deployed successfully (see below).
+build #5:
+{"_class":"org.jenkinsci.plugins.workflow.job.WorkflowRun","building":false,"duration":53748,"number":5,"result":"SUCCESS"}
+cicd_app 2/2 kaj1/cicd-demo:5
+{"app":"cicd-demo","build":"5","commit":"e317ad7","host":"1b7528eeca94"}

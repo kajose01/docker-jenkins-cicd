@@ -1,0 +1,2 @@
+ID             NAME       MODE         REPLICAS   IMAGE              PORTS
+ecva2m9wjerk   cicd_app   replicated   2/2        kaj1/cicd-demo:5   *:8095->3000/tcp
