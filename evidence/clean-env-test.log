@@ -1,0 +1,14 @@
+== Build from the repository
+
+== Start a throwaway instance
+PASS: T1 Jenkins boots from the repo configuration (got yes)
+     Jenkins version: 2.541.3
+
+== Configuration as Code and plugins
+PASS: T2 docker-cicd job was created from casc.yaml (got 200)
+PASS: T3 anonymous access is refused (got yes)
+PASS: T4 installed plugins match jenkins/plugins.txt exactly (got identical)
+PASS: T5 junit plugin is installed (got 1)
+     plugins installed: 73
+
+RESULT: 5 passed, 0 failed
