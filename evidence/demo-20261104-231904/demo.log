@@ -1,0 +1,38 @@
+== Preconditions (the script is safe to re-run only from a clean, synced main)
+PASS: P1 the app is serving the last build (#17) (got 17)
+PASS: P2 all replicas are running (got 2/2)
+PASS: P3 the app serves the commit at HEAD (the last push has been built and deployed) (got 4d2b952)
+
+== Scenario 1: push a commit that breaks the greeting tests
+build #18 result: FAILURE (full console log: evidence/demo-20261104-231904/scenario1-broken-release.console.log)
+[2026-11-04T23:20:09.085Z] #10 0.788 # pass 2
+[2026-11-04T23:20:09.085Z] #10 0.788 # fail 3
+[2026-11-04T23:20:09.085Z] 0.788 # fail 3
+Stage "Build" skipped due to earlier failure(s)
+Stage "Push" skipped due to earlier failure(s)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
+PASS: B1 the broken build failed (got FAILURE)
+PASS: B2 tests failed (# fail count is not 0) (got yes)
+PASS: B3 build description names the stage (got 1)
+PASS: B4 the Deploy stage never ran (no previous-release line in the log) (got no)
+PASS: B5 the running image is unchanged (got kaj1/cicd-demo:17@sha256:acbe11fb264b6d1f725b57322dcafbee2accb972c9fe01651b735a3216f67403)
+PASS: B6 the old build (#17) is still serving (got 17)
+PASS: B7 all replicas are running (got 2/2)
+
+== Scenario 2: revert the bad commit
+build #19 result: SUCCESS (full console log: evidence/demo-20261104-231904/scenario2-revert.console.log)
+[2026-11-04T23:21:15.684Z] #10 1.857 # pass 5
+[2026-11-04T23:21:15.684Z] #10 1.857 # fail 0
+[2026-11-04T23:22:02.916Z] replicas running kaj1/cicd-demo:19: 2 of 2
+[2026-11-04T23:22:02.916Z] SMOKE TEST PASSED: build 19 (commit 8ee3014) is serving on all 2 replicas
+Finished: SUCCESS
+PASS: R1 the revert build succeeded (got SUCCESS)
+PASS: R2 build description confirms deployment (got 1)
+PASS: R3 the app serves the new build (#19) (got 19)
+PASS: R4 the app serves the reverted commit (8ee3014) (got 8ee3014)
+PASS: R5 the service runs image tag 19 (got 19)
+PASS: R6 all replicas are running (got 2/2)
+
+RESULT: 16 passed, 0 failed
