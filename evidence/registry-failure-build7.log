@@ -1,0 +1,15 @@
+Registry authentication failure: Jenkins build #7 (run with the Jenkinsfile before the rollback changes).
+The Docker Hub token held by Jenkins was no longer valid. Push failed, the Deploy stage was skipped,
+and the running release (build 6) kept serving. Excerpt of the console log:
+
+[Pipeline] { (Test)
+[2026-11-04T22:34:24.366Z] #10 2.728 # pass 5
+[2026-11-04T22:34:24.367Z] #10 2.728 # fail 0
+[2026-11-04T22:34:24.367Z] #10 2.729 # skipped 0
+[Pipeline] { (Build)
+[Pipeline] { (Push)
+[2026-11-04T22:34:26.586Z] Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password
+[Pipeline] { (Deploy)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
