@@ -1,0 +1,39 @@
+== Before: release kaj1/cicd-demo:6@sha256:0509c5560127261762ba436530f3209a8cb212ccc075d608bfe69e1b92a8b02f
+update_config: parallelism=1 order=start-first failure_action=rollback monitor=10s
+NAME             IMAGE              DESIRED STATE   CURRENT STATE             ERROR
+cicd_app.1       kaj1/cicd-demo:6   Running         Running 4 minutes ago     
+ \_ cicd_app.1   nginx:alpine       Shutdown        Shutdown 4 minutes ago    
+ \_ cicd_app.1   kaj1/cicd-demo:6   Shutdown        Shutdown 5 minutes ago    
+ \_ cicd_app.1   kaj1/cicd-demo:6   Shutdown        Shutdown 25 minutes ago   
+ \_ cicd_app.1   kaj1/cicd-demo:6   Shutdown        Failed 25 minutes ago     "task: non-zero exit (137)"
+PASS: S1 before: build 6 is serving (got 6)
+
+== 1. Update to a release that fails its health check (nginx:alpine, health check on port 3000)
+docker service update exit status: 0
+verify: Waiting 1 seconds to verify that tasks are stable...
+verify: Waiting 1 seconds to verify that tasks are stable...
+verify: Waiting 1 seconds to verify that tasks are stable...
+verify: Service cicd_app converged
+rollback: rollback completed
+update status: {"State":"rollback_completed","StartedAt":"2026-11-04T22:20:29.51022934Z","CompletedAt":"2026-11-04T22:20:39.512256037Z","Message":"rollback completed"}
+NAME             IMAGE              DESIRED STATE   CURRENT STATE             ERROR
+cicd_app.1       nginx:alpine       Shutdown        Complete 10 seconds ago   
+ \_ cicd_app.1   kaj1/cicd-demo:6   Running         Running 4 minutes ago     
+ \_ cicd_app.1   nginx:alpine       Shutdown        Shutdown 4 minutes ago    
+ \_ cicd_app.1   kaj1/cicd-demo:6   Shutdown        Shutdown 5 minutes ago    
+ \_ cicd_app.1   kaj1/cicd-demo:6   Shutdown        Shutdown 26 minutes ago   
+cicd_app.2       kaj1/cicd-demo:6   Running         Running 5 minutes ago     
+ \_ cicd_app.2   nginx:alpine       Shutdown        Shutdown 5 minutes ago    
+ \_ cicd_app.2   kaj1/cicd-demo:6   Shutdown        Shutdown 5 minutes ago    
+ \_ cicd_app.2   kaj1/cicd-demo:6   Shutdown        Failed 26 minutes ago     "task: non-zero exit (137)"
+ \_ cicd_app.2   kaj1/cicd-demo:6   Shutdown        Failed 26 hours ago       "task: non-zero exit (137)"
+
+== 2. Swarm must have rolled back by itself
+PASS: S2 update status is rollback_completed (got rollback_completed)
+PASS: S3 the service runs the previous image again (got kaj1/cicd-demo:6@sha256:0509c5560127261762ba436530f3209a8cb212ccc075d608bfe69e1b92a8b02f)
+PASS: S4 the app serves the previous build again (got 6)
+PASS: S5 all replicas are running (got 2/2)
+availability probe: 20 requests to /version during the test, 0 not answered with HTTP 200
+PASS: S6 every request during the failed update was answered with 200 (got 0)
+
+RESULT: 6 passed, 0 failed

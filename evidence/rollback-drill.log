@@ -1,0 +1,44 @@
+== Before: previous release is kaj1/cicd-demo:6@sha256:0509c5560127261762ba436530f3209a8cb212ccc075d608bfe69e1b92a8b02f
+ID             NAME             IMAGE              NODE              DESIRED STATE   CURRENT STATE             ERROR     PORTS
+yykszitk0jxh   cicd_app.1       kaj1/cicd-demo:6   ip-172-31-27-20   Running         Running 13 minutes ago              
+xscmzx28et5k    \_ cicd_app.1   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 13 minutes ago             
+jbwymwpmodqt    \_ cicd_app.1   kaj1/cicd-demo:6   ip-172-31-27-20   Shutdown        Shutdown 13 minutes ago             
+uiozb5hq1ecb    \_ cicd_app.1   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 16 minutes ago             
+seojkf7g3tvl    \_ cicd_app.1   kaj1/cicd-demo:6   ip-172-31-27-20   Shutdown        Shutdown 17 minutes ago             
+PASS: P1 before the drill: build 6 is serving (got 6)
+
+== 1. Deploy a bad release (nginx:alpine: tasks run, nothing answers on port 3000)
+PASS: D1 Swarm treats the update as successful (no automatic rollback happened) (got completed)
+PASS: D2 the service now runs the bad image (got nginx:alpine)
+ID             NAME             IMAGE              NODE              DESIRED STATE   CURRENT STATE             ERROR     PORTS
+q0dp0wa1loe9   cicd_app.1       nginx:alpine       ip-172-31-27-20   Running         Running 16 seconds ago              
+yykszitk0jxh    \_ cicd_app.1   kaj1/cicd-demo:6   ip-172-31-27-20   Shutdown        Shutdown 2 seconds ago              
+xscmzx28et5k    \_ cicd_app.1   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 13 minutes ago             
+jbwymwpmodqt    \_ cicd_app.1   kaj1/cicd-demo:6   ip-172-31-27-20   Shutdown        Shutdown 14 minutes ago             
+uiozb5hq1ecb    \_ cicd_app.1   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 17 minutes ago             
+
+== 2. The smoke test must catch it
+attempt 7/8: HTTP 000 build=none commit=none (consecutive matches 0/10)
+attempt 8/8: HTTP 000 build=none commit=none (consecutive matches 0/10)
+SMOKE TEST FAILED: /version did not report build 999 commit deadbeef 10 times in a row within 8 attempts (last: HTTP 000, build=none, commit=none)
+PASS: D3 smoke test fails (exit status) (got 1)
+
+== 3. Roll back
+replicas running kaj1/cicd-demo:6: 2 of 2
+SMOKE TEST PASSED: build 6 is serving on all 2 replicas
+--- service tasks after rollback
+ID             NAME             IMAGE              NODE              DESIRED STATE   CURRENT STATE                 ERROR     PORTS
+4onncffaf6vg   cicd_app.1       kaj1/cicd-demo:6   ip-172-31-27-20   Running         Running 30 seconds ago                  
+q0dp0wa1loe9    \_ cicd_app.1   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 27 seconds ago                 
+yykszitk0jxh    \_ cicd_app.1   kaj1/cicd-demo:6   ip-172-31-27-20   Shutdown        Shutdown 56 seconds ago                 
+xscmzx28et5k    \_ cicd_app.1   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 14 minutes ago                 
+jbwymwpmodqt    \_ cicd_app.1   kaj1/cicd-demo:6   ip-172-31-27-20   Shutdown        Shutdown 15 minutes ago                 
+7h0v6imilaww   cicd_app.2       kaj1/cicd-demo:6   ip-172-31-27-20   Running         Running 19 seconds ago                  
+is0hi60pcd54    \_ cicd_app.2   nginx:alpine       ip-172-31-27-20   Shutdown        Shutdown 16 seconds ago                 
+ROLLBACK OK: build 6 is serving again
+PASS: D4 rollback.sh succeeds (exit status) (got 0)
+PASS: D5 the service runs the previous image again (got kaj1/cicd-demo:6@sha256:0509c5560127261762ba436530f3209a8cb212ccc075d608bfe69e1b92a8b02f)
+PASS: D6 the app serves the previous build again (got 6)
+PASS: D7 all replicas are running (got 2/2)
+
+RESULT: 8 passed, 0 failed
