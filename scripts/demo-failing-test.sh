@@ -32,11 +32,14 @@ desc()   { ./scripts/jenkins-api.sh status | python3 -c 'import sys,json; print(
 served() { curl -s --max-time 3 localhost:8095/version | grep -o "\"$1\":\"[^\"]*\"" | cut -d'"' -f4; }
 img()    { docker service inspect cicd_app --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'; }
 reps()   { docker service ls --filter name=cicd_app --format '{{.Replicas}}'; }
-wait_build() {   # wait_build <previous build number>; prints "<number> <result>"
-  local n0=$1 n res b
+wait_build() {   # wait_build <previous build number> <commit>; waits for the build OF THAT COMMIT; prints "<number> <result>"
+  local n0=$1 sha=$2 n res b
   for i in $(seq 1 120); do
     read -r n res b <<<"$(last)"
-    if [ "$n" -gt "$n0" ] && [ "$b" = False ]; then echo "$n $res"; return; fi
+    if [ "$n" -gt "$n0" ] && [ "$b" = False ]; then
+      if ./scripts/jenkins-api.sh log | grep -q "building commit $sha as build $n"; then echo "$n $res"; return; fi
+      n0=$n   # that build was for a different commit (already in flight); keep waiting for ours
+    fi
     if [ "$i" -eq 40 ] && [ "$n" -le "$n0" ]; then ./scripts/jenkins-api.sh trigger >/dev/null; fi   # polling did not notice the push
     sleep 3
   done
@@ -55,6 +58,8 @@ PREV_IMAGE=$(img)
 GOOD=$(git rev-parse HEAD)
 check "P1 the app is serving the last build (#$N0)" "$(served build)" "$N0"
 check "P2 all replicas are running" "$(reps)" "2/2"
+check "P3 the app serves the commit at HEAD (the last push has been built and deployed)" "$(served commit)" "$(git rev-parse --short HEAD)"
+[ "$FAILN" -eq 0 ] || die "a precondition failed; wait for Jenkins to finish building the latest push, then run again"
 
 log; log "== Scenario 1: push a commit that breaks the greeting tests"
 sed -i 's/Hello, ${n}!/Hi, ${n}!/' app/src/lib.js
@@ -62,7 +67,7 @@ git diff --quiet app/src/lib.js && die "the edit changed nothing"
 git commit app/src/lib.js -m "Change greeting text (breaks the tests on purpose)" >/dev/null || die "commit failed"
 BAD_LOCAL=$(git rev-parse HEAD)
 if git push origin main; then BAD=$BAD_LOCAL; else git reset --hard "$GOOD" >/dev/null; die "push failed; the local bad commit was removed"; fi
-read -r N1 R1 <<<"$(wait_build "$N0")"
+read -r N1 R1 <<<"$(wait_build "$N0" "$(git rev-parse --short "$BAD")")"
 ./scripts/jenkins-api.sh log > "$DIR/scenario1-broken-release.console.log"
 log "build #$N1 result: $R1 (full console log: $DIR/scenario1-broken-release.console.log)"
 grep -E "# (pass|fail)|skipped due to earlier|Finished:" "$DIR/scenario1-broken-release.console.log" | tee -a "$OUT"
@@ -79,7 +84,7 @@ git revert --no-edit "$BAD" >/dev/null || die "revert failed"
 REVERTED=1
 git push origin main || die "push of the revert failed"
 HEAD_SHORT=$(git rev-parse --short HEAD)
-read -r N2 R2 <<<"$(wait_build "$N1")"
+read -r N2 R2 <<<"$(wait_build "$N1" "$HEAD_SHORT")"
 ./scripts/jenkins-api.sh log > "$DIR/scenario2-revert.console.log"
 log "build #$N2 result: $R2 (full console log: $DIR/scenario2-revert.console.log)"
 grep -E "# (pass|fail)|SMOKE TEST|replicas running|Finished:" "$DIR/scenario2-revert.console.log" | tee -a "$OUT"
