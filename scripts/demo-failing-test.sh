@@ -33,14 +33,15 @@ served() { curl -s --max-time 3 localhost:8095/version | grep -o "\"$1\":\"[^\"]
 img()    { docker service inspect cicd_app --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'; }
 reps()   { docker service ls --filter name=cicd_app --format '{{.Replicas}}'; }
 wait_build() {   # wait_build <previous build number> <commit>; waits for the build OF THAT COMMIT; prints "<number> <result>"
-  local n0=$1 sha=$2 n res b
+  local n0=$1 sha=$2 n res b L seen=$1
   for i in $(seq 1 120); do
     read -r n res b <<<"$(last)"
-    if [ "$n" -gt "$n0" ] && [ "$b" = False ]; then
-      if ./scripts/jenkins-api.sh log | grep -q "building commit $sha as build $n"; then echo "$n $res"; return; fi
-      n0=$n   # that build was for a different commit (already in flight); keep waiting for ours
+    if [ "$n" -gt "$seen" ] && [ "$b" = False ]; then
+      L=$(./scripts/jenkins-api.sh log)   # read the whole log first: "log | grep -q" can fail under pipefail (SIGPIPE)
+      case "$L" in *"building commit $sha as build $n"*) echo "$n $res"; return;; esac
+      seen=$n   # that build was for a different commit; keep waiting for ours
     fi
-    if [ "$i" -eq 40 ] && [ "$n" -le "$n0" ]; then ./scripts/jenkins-api.sh trigger >/dev/null; fi   # polling did not notice the push
+    if [ "$i" -eq 40 ] && [ "$n" -le "$n0" ]; then ./scripts/jenkins-api.sh trigger >/dev/null; fi   # polling never noticed the push
     sleep 3
   done
   echo "$n TIMEOUT"
