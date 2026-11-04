@@ -1,2 +1,0 @@
-== Preconditions (the script is safe to re-run only from a clean, synced main)
-FATAL: working tree has uncommitted changes; commit or stash first

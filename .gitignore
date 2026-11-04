@@ -1,3 +1,5 @@
 .env
 *.pem
 node_modules/
+evidence/*.failed.log
+evidence/*-FAILED/
