@@ -69,4 +69,11 @@ done
 echo "replicas running ${IMAGE}:${EXPECT_BUILD}: $have of $want"
 [ "$have" = "$want" ] || fail "only $have of $want replicas run ${IMAGE}:${EXPECT_BUILD}"
 
+# 5. (optional) every replica runs exactly the image digest that was pushed
+if [ -n "${EXPECT_DIGEST:-}" ]; then
+  nd=$(docker service ps "$SERVICE" --filter desired-state=running --no-trunc --format '{{.Image}}' 2>/dev/null | grep -c "@${EXPECT_DIGEST}\$" || true)
+  echo "replicas running digest ${EXPECT_DIGEST:0:19}...: $nd of $want"
+  [ "$nd" = "$want" ] || fail "only $nd of $want replicas run the pushed digest ${EXPECT_DIGEST}"
+fi
+
 echo "SMOKE TEST PASSED: build $EXPECT_BUILD${EXPECT_COMMIT:+ (commit $EXPECT_COMMIT)} is serving on all $want replicas"

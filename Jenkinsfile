@@ -14,6 +14,10 @@ pipeline {
     SMOKE_ATTEMPTS    = '60'
     SMOKE_SLEEP       = '2'
     SMOKE_CONSECUTIVE = '10'
+    // Vulnerability scan before publishing: the full HIGH/CRITICAL report is archived; the build fails only on a
+    // CRITICAL finding that already has a fix.
+    TRIVY = 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache/ aquasec/trivy:latest'
+    TRIVY_FAIL_SEVERITY = 'CRITICAL'
     SMOKE_GREET_PATH   = '/api/greet?name=Smoke'
     SMOKE_GREET_EXPECT = 'Hello, Smoke!'
   }
@@ -44,6 +48,17 @@ pipeline {
         sh 'docker build --target runtime --build-arg BUILD_NUMBER=${TAG} --build-arg GIT_SHA=${GIT_SHA} -t ${IMAGE}:${TAG} -t ${IMAGE}:latest .'
       }
     }
+    stage('Scan') {
+      steps {
+        script { env.CURRENT = 'Scan' }
+        sh '''
+          mkdir -p reports
+          { echo "Trivy scan of ${IMAGE}:${TAG} on $(date -u +%FT%TZ), scanner: $($TRIVY --version | head -1)"; echo; $TRIVY image --quiet --severity HIGH,CRITICAL ${IMAGE}:${TAG}; } | tee reports/trivy-${TAG}.txt
+          $TRIVY image --quiet --ignore-unfixed --severity ${TRIVY_FAIL_SEVERITY} --exit-code 1 ${IMAGE}:${TAG}
+        '''
+      }
+      post { always { archiveArtifacts artifacts: 'reports/trivy-*.txt', allowEmptyArchive: true } }
+    }
     stage('Push') {
       steps {
         script { env.CURRENT = 'Push' }
@@ -54,6 +69,11 @@ pipeline {
             docker push ${IMAGE}:latest
             docker logout
           '''
+        }
+        script {
+          env.DIGEST = sh(returnStdout: true, script: 'docker inspect --format "{{index .RepoDigests 0}}" ${IMAGE}:${TAG} | cut -d@ -f2').trim()
+          if (!(env.DIGEST ==~ /sha256:[0-9a-f]{64}/)) { error("could not read the digest of the pushed image: '${env.DIGEST}'") }
+          echo "pushed ${env.IMAGE}:${env.TAG} as ${env.DIGEST}"
         }
       }
     }
@@ -67,13 +87,14 @@ pipeline {
           echo "previous release: ${env.PREV_IMAGE ?: 'none (first deployment)'}"
           env.DEPLOY_STARTED = 'true'
         }
-        sh 'IMAGE_TAG=${TAG} docker stack deploy -c docker-stack.yml ${STACK}'
+        // tag@digest: the service runs exactly the image that was scanned and pushed
+        sh 'IMAGE_TAG=${TAG}@${DIGEST} docker stack deploy -c docker-stack.yml ${STACK}'
       }
     }
     stage('Smoke test') {
       steps {
         script { env.CURRENT = 'Smoke test' }
-        sh 'bash scripts/smoke-test.sh "$TAG" "$GIT_SHA"'
+        sh 'EXPECT_DIGEST="$DIGEST" bash scripts/smoke-test.sh "$TAG" "$GIT_SHA"'
       }
     }
   }
@@ -87,7 +108,7 @@ pipeline {
     failure {
       script {
         def kinds = ['Checkout': 'checkout failure', 'Test': 'test failure', 'Build': 'image-build failure',
-                     'Push': 'image-push failure', 'Deploy': 'deployment failure', 'Smoke test': 'smoke-test failure']
+                     'Scan': 'vulnerability-scan failure', 'Push': 'image-push failure', 'Deploy': 'deployment failure', 'Smoke test': 'smoke-test failure']
         def kind = kinds[env.CURRENT] ?: 'failure'
         def outcome = 'no deployment was started, so the running release was not touched'
         if (env.DEPLOY_STARTED == 'true') {
