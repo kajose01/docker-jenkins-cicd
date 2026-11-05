@@ -29,8 +29,13 @@ pipeline {
     stage('Test') {
       steps {
         script { env.CURRENT = 'Test' }
-        // --no-cache-filter makes sure the tests really run every time, not from cache
-        sh 'docker build --progress=plain --no-cache-filter test --target test -t cicd-test:${TAG} .'
+        // --no-cache-filter makes sure the tests really run every time, not from cache.
+        // The test stage always succeeds and writes reports/exit-code, so the reports exist even when tests fail;
+        // the verdict is taken after the report has been published.
+        sh 'rm -rf reports && docker build --progress=plain --no-cache-filter test --target test-report --output type=local,dest=reports .'
+        junit testResults: 'reports/junit.xml', allowEmptyResults: false
+        archiveArtifacts artifacts: 'reports/**', fingerprint: true
+        sh 'test "$(cat reports/exit-code)" = "0"'
       }
     }
     stage('Build') {
