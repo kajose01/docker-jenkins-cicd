@@ -1,5 +1,6 @@
 # Multi-stage: "test" runs the unit and integration tests, "runtime" is the image that ships
-FROM node:20-alpine AS base
+# Base image pinned by digest (tag for humans: node:24-alpine, an LTS line). To update: docker pull, read the new digest, rebuild, rescan.
+FROM node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 AS base
 WORKDIR /app
 COPY app/package.json ./
 COPY app/src ./src
@@ -17,6 +18,10 @@ FROM scratch AS test-report
 COPY --from=test /app/report/ /
 
 FROM base AS runtime
+# Hardening: the app only needs node. Remove npm and yarn (and their bundled packages) from the shipped image,
+# and upgrade just the two OpenSSL libraries flagged by the scan (a no-op if the base already has the fix).
+RUN apk upgrade --no-cache libcrypto3 libssl3 \
+ && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 ARG BUILD_NUMBER=dev
 ARG GIT_SHA=unknown
 ENV NODE_ENV=production BUILD_NUMBER=$BUILD_NUMBER GIT_SHA=$GIT_SHA
