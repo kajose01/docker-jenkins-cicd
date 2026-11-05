@@ -6,7 +6,15 @@ COPY app/src ./src
 
 FROM base AS test
 COPY app/test ./test
-RUN npm test
+# Always succeeds: the exit status of the tests is saved in report/exit-code and judged by the Jenkinsfile,
+# so the reports can be exported even when tests fail.
+RUN mkdir -p report; \
+    npm run test:ci > report/test-output.txt 2>&1; echo $? > report/exit-code; \
+    cat report/test-output.txt; \
+    true
+
+FROM scratch AS test-report
+COPY --from=test /app/report/ /
 
 FROM base AS runtime
 ARG BUILD_NUMBER=dev

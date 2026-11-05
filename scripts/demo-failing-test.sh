@@ -71,9 +71,9 @@ if git push origin main; then BAD=$BAD_LOCAL; else git reset --hard "$GOOD" >/de
 read -r N1 R1 <<<"$(wait_build "$N0" "$(git rev-parse --short "$BAD")")"
 ./scripts/jenkins-api.sh log > "$DIR/scenario1-broken-release.console.log"
 log "build #$N1 result: $R1 (full console log: $DIR/scenario1-broken-release.console.log)"
-grep -E "# (pass|fail)|skipped due to earlier|Finished:" "$DIR/scenario1-broken-release.console.log" | tee -a "$OUT"
+grep -E "(pass|fail) [0-9]+[[:space:]]*$|skipped due to earlier|Finished:" "$DIR/scenario1-broken-release.console.log" | tee -a "$OUT"
 check "B1 the broken build failed" "$R1" FAILURE
-check "B2 tests failed (# fail count is not 0)" "$(has x '# fail [1-9]' "$DIR/scenario1-broken-release.console.log")" yes
+check "B2 tests failed (the fail count is not 0)" "$(has x 'fail [1-9][0-9]*[[:space:]]*$' "$DIR/scenario1-broken-release.console.log")" yes
 check "B3 build description names the stage" "$(desc | grep -c 'test failure, stage Test')" 1
 check "B4 the Deploy stage never ran (no previous-release line in the log)" "$(has x 'previous release:' "$DIR/scenario1-broken-release.console.log")" no
 check "B5 the running image is unchanged" "$(img)" "$PREV_IMAGE"
@@ -88,7 +88,7 @@ HEAD_SHORT=$(git rev-parse --short HEAD)
 read -r N2 R2 <<<"$(wait_build "$N1" "$HEAD_SHORT")"
 ./scripts/jenkins-api.sh log > "$DIR/scenario2-revert.console.log"
 log "build #$N2 result: $R2 (full console log: $DIR/scenario2-revert.console.log)"
-grep -E "# (pass|fail)|SMOKE TEST|replicas running|Finished:" "$DIR/scenario2-revert.console.log" | tee -a "$OUT"
+grep -E "(pass|fail) [0-9]+[[:space:]]*$|SMOKE TEST|replicas running|Finished:" "$DIR/scenario2-revert.console.log" | tee -a "$OUT"
 check "R1 the revert build succeeded" "$R2" SUCCESS
 check "R2 build description confirms deployment" "$(desc | grep -c "^SUCCESS: build $N2 (commit $HEAD_SHORT)")" 1
 check "R3 the app serves the new build (#$N2)" "$(served build)" "$N2"
