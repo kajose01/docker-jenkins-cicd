@@ -1,0 +1,3 @@
+Live Jenkins 2.541.3 plugin check on 2026-11-05, against jenkins/plugins.txt
+junit: 1446.veeff2ec8581c active: True
+live plugins: 73 pinned: 73 -> ALL MATCH
