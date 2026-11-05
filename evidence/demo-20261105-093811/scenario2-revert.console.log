@@ -1,0 +1,366 @@
+Started by an SCM change
+Checking out git https://github.com/kajose01/docker-jenkins-cicd.git into /var/jenkins_home/workspace/docker-cicd@script/bfae40a243df280c1498b07a3775fbeac3272f6119f377d7adedea958736d80e to read Jenkinsfile
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/docker-cicd@script/bfae40a243df280c1498b07a3775fbeac3272f6119f377d7adedea958736d80e/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kajose01/docker-jenkins-cicd.git # timeout=10
+Fetching upstream changes from https://github.com/kajose01/docker-jenkins-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/kajose01/docker-jenkins-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b360add8e8e5746237f6123e9011aa356e4f6b38 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b360add8e8e5746237f6123e9011aa356e4f6b38 # timeout=10
+Commit message: "Revert "Change greeting text (breaks the tests on purpose)""
+ > git rev-list --no-walk 488d14c1e3ff4783ea3a00fa27517a308f750851 # timeout=10
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/docker-cicd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/docker-cicd/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kajose01/docker-jenkins-cicd.git # timeout=10
+Fetching upstream changes from https://github.com/kajose01/docker-jenkins-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/kajose01/docker-jenkins-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b360add8e8e5746237f6123e9011aa356e4f6b38 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b360add8e8e5746237f6123e9011aa356e4f6b38 # timeout=10
+Commit message: "Revert "Change greeting text (breaks the tests on purpose)""
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-11-05T09:40:11.044Z] Timeout set to expire in 20 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] checkout
+[2026-11-05T09:40:11.385Z] The recommended git tool is: NONE
+[2026-11-05T09:40:11.385Z] No credentials specified
+[2026-11-05T09:40:11.385Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/docker-cicd/.git # timeout=10
+[2026-11-05T09:40:11.396Z] Fetching changes from the remote Git repository
+[2026-11-05T09:40:11.399Z]  > git config remote.origin.url https://github.com/kajose01/docker-jenkins-cicd.git # timeout=10
+[2026-11-05T09:40:11.413Z] Fetching upstream changes from https://github.com/kajose01/docker-jenkins-cicd.git
+[2026-11-05T09:40:11.413Z]  > git --version # timeout=10
+[2026-11-05T09:40:11.425Z]  > git --version # 'git version 2.47.3'
+[2026-11-05T09:40:11.425Z]  > git fetch --tags --force --progress -- https://github.com/kajose01/docker-jenkins-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-11-05T09:40:11.595Z]  > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+[2026-11-05T09:40:11.598Z] Checking out Revision b360add8e8e5746237f6123e9011aa356e4f6b38 (refs/remotes/origin/main)
+[2026-11-05T09:40:11.598Z]  > git config core.sparsecheckout # timeout=10
+[2026-11-05T09:40:11.601Z]  > git checkout -f b360add8e8e5746237f6123e9011aa356e4f6b38 # timeout=10
+[2026-11-05T09:40:11.608Z] Commit message: "Revert "Change greeting text (breaks the tests on purpose)""
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-11-05T09:40:11.939Z] + git rev-parse --short HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:40:12.280Z] + echo building commit b360add as build 23
+[2026-11-05T09:40:12.280Z] building commit b360add as build 23
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:40:12.759Z] + rm -rf reports
+[2026-11-05T09:40:12.759Z] + docker build --progress=plain --no-cache-filter test --target test-report --output type=local,dest=reports .
+[2026-11-05T09:40:12.759Z] #0 building with "default" instance using docker driver
+[2026-11-05T09:40:12.759Z] 
+[2026-11-05T09:40:12.759Z] #1 [internal] load build definition from Dockerfile
+[2026-11-05T09:40:13.009Z] #1 transferring dockerfile: 938B done
+[2026-11-05T09:40:13.009Z] #1 DONE 0.0s
+[2026-11-05T09:40:13.009Z] 
+[2026-11-05T09:40:13.009Z] #2 [internal] load metadata for docker.io/library/node:20-alpine
+[2026-11-05T09:40:13.009Z] #2 DONE 0.0s
+[2026-11-05T09:40:13.009Z] 
+[2026-11-05T09:40:13.009Z] #3 [internal] load .dockerignore
+[2026-11-05T09:40:13.009Z] #3 transferring context: 96B done
+[2026-11-05T09:40:13.009Z] #3 DONE 0.0s
+[2026-11-05T09:40:13.009Z] 
+[2026-11-05T09:40:13.009Z] #4 [internal] load build context
+[2026-11-05T09:40:13.009Z] #4 DONE 0.0s
+[2026-11-05T09:40:13.009Z] 
+[2026-11-05T09:40:13.009Z] #5 [base 1/4] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-11-05T09:40:13.009Z] #5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+[2026-11-05T09:40:13.009Z] #5 DONE 0.0s
+[2026-11-05T09:40:13.262Z] 
+[2026-11-05T09:40:13.262Z] #4 [internal] load build context
+[2026-11-05T09:40:13.262Z] #4 transferring context: 628B done
+[2026-11-05T09:40:13.262Z] #4 DONE 0.0s
+[2026-11-05T09:40:13.262Z] 
+[2026-11-05T09:40:13.262Z] #6 [base 3/4] COPY app/package.json ./
+[2026-11-05T09:40:13.262Z] #6 CACHED
+[2026-11-05T09:40:13.262Z] 
+[2026-11-05T09:40:13.262Z] #7 [base 2/4] WORKDIR /app
+[2026-11-05T09:40:13.262Z] #7 CACHED
+[2026-11-05T09:40:13.262Z] 
+[2026-11-05T09:40:13.262Z] #8 [base 4/4] COPY app/src ./src
+[2026-11-05T09:40:13.262Z] #8 CACHED
+[2026-11-05T09:40:13.262Z] 
+[2026-11-05T09:40:13.262Z] #9 [test 1/2] COPY app/test ./test
+[2026-11-05T09:40:13.262Z] #9 DONE 0.0s
+[2026-11-05T09:40:13.262Z] 
+[2026-11-05T09:40:13.262Z] #10 [test 2/2] RUN mkdir -p report;     npm run test:ci > report/test-output.txt 2>&1; echo $? > report/exit-code;     cat report/test-output.txt;     true
+[2026-11-05T09:40:14.176Z] #10 1.176 
+[2026-11-05T09:40:14.176Z] #10 1.176 > cicd-demo@1.0.0 test:ci
+[2026-11-05T09:40:14.176Z] #10 1.176 > node --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=report/junit.xml
+[2026-11-05T09:40:14.176Z] #10 1.176 
+[2026-11-05T09:40:14.176Z] #10 1.176 ▶ greeting()
+[2026-11-05T09:40:14.176Z] #10 1.176   ✔ defaults to world when no name is given (4.742907ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ treats null, empty and whitespace-only names as world (0.578381ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ trims the name (0.212459ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ accepts exactly 30 characters and rejects 31 (0.207098ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ accepts letters from other alphabets, digits, space, underscore and hyphen (0.194636ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ rejects markup and other special characters (0.202703ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ rejects malformed input: embedded newline, object, array (0.187461ms)
+[2026-11-05T09:40:14.177Z] #10 1.176 ✔ greeting() (8.881405ms)
+[2026-11-05T09:40:14.177Z] #10 1.176 ▶ HTTP server
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ GET /health returns 200 and status ok (105.239705ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ GET /version reports the build metadata injected through the environment (13.995552ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ GET /version falls back to dev/unknown when no metadata is injected (18.524579ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ GET /api/greet returns 200 with a greeting (9.257276ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ GET /api/greet without a name greets the world (9.489276ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ GET /api/greet returns 400 with an error for invalid names (22.660829ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ survives malformed requests and keeps serving (10.805684ms)
+[2026-11-05T09:40:14.177Z] #10 1.176   ✔ returns 404 with a JSON error for unknown routes (6.084022ms)
+[2026-11-05T09:40:14.177Z] #10 1.176 ✔ HTTP server (204.732304ms)
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ tests 15
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ suites 2
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ pass 15
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ fail 0
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ cancelled 0
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ skipped 0
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ todo 0
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ duration_ms 382.540434
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ start of coverage report
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ -----------------------------------------------------------------
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ file             | line % | branch % | funcs % | uncovered lines
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ -----------------------------------------------------------------
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ src/lib.js       | 100.00 |   100.00 |  100.00 | 
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ src/server.js    |  92.59 |    93.33 |   75.00 | 25-26
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ test/app.test.js | 100.00 |    90.00 |  100.00 | 
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ -----------------------------------------------------------------
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ all files        |  98.61 |    92.59 |   96.00 |
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ -----------------------------------------------------------------
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ end of coverage report
+[2026-11-05T09:40:14.177Z] #10 1.176 npm notice
+[2026-11-05T09:40:14.177Z] #10 1.176 npm notice New major version of npm available! 10.8.2 -> 12.2.2
+[2026-11-05T09:40:14.177Z] #10 1.176 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+[2026-11-05T09:40:14.177Z] #10 1.176 npm notice To update run: npm install -g npm@12.2.2
+[2026-11-05T09:40:14.177Z] #10 1.176 npm notice
+[2026-11-05T09:40:14.428Z] #10 DONE 1.2s
+[2026-11-05T09:40:14.428Z] 
+[2026-11-05T09:40:14.428Z] #11 [test-report 1/1] COPY --from=test /app/report/ /
+[2026-11-05T09:40:14.428Z] #11 DONE 0.0s
+[2026-11-05T09:40:14.428Z] 
+[2026-11-05T09:40:14.428Z] #12 exporting to client directory
+[2026-11-05T09:40:14.428Z] #12 copying files 4.48kB done
+[2026-11-05T09:40:14.428Z] #12 DONE 0.0s
+[Pipeline] junit
+[2026-11-05T09:40:14.458Z] Recording test results
+[2026-11-05T09:40:14.477Z] [Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+[2026-11-05T09:40:14.510Z] Archiving artifacts
+[2026-11-05T09:40:14.511Z] Recording fingerprints
+[Pipeline] sh
+[2026-11-05T09:40:14.821Z] + cat reports/exit-code
+[2026-11-05T09:40:14.822Z] + test 0 = 0
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:40:15.296Z] + docker build --target runtime --build-arg BUILD_NUMBER=23 --build-arg GIT_SHA=b360add -t kaj1/cicd-demo:23 -t kaj1/cicd-demo:latest .
+[2026-11-05T09:40:15.548Z] #0 building with "default" instance using docker driver
+[2026-11-05T09:40:15.548Z] 
+[2026-11-05T09:40:15.548Z] #1 [internal] load build definition from Dockerfile
+[2026-11-05T09:40:15.548Z] #1 transferring dockerfile: 938B done
+[2026-11-05T09:40:15.548Z] #1 DONE 0.0s
+[2026-11-05T09:40:15.548Z] 
+[2026-11-05T09:40:15.548Z] #2 [internal] load metadata for docker.io/library/node:20-alpine
+[2026-11-05T09:40:15.548Z] #2 DONE 0.0s
+[2026-11-05T09:40:15.548Z] 
+[2026-11-05T09:40:15.551Z] #3 [internal] load .dockerignore
+[2026-11-05T09:40:15.551Z] #3 transferring context: 96B done
+[2026-11-05T09:40:15.551Z] #3 DONE 0.0s
+[2026-11-05T09:40:15.551Z] 
+[2026-11-05T09:40:15.551Z] #4 [internal] load build context
+[2026-11-05T09:40:15.551Z] #4 transferring context: 159B done
+[2026-11-05T09:40:15.551Z] #4 DONE 0.0s
+[2026-11-05T09:40:15.551Z] 
+[2026-11-05T09:40:15.551Z] #5 [base 1/4] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-11-05T09:40:15.551Z] #5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+[2026-11-05T09:40:15.551Z] #5 DONE 0.0s
+[2026-11-05T09:40:15.551Z] 
+[2026-11-05T09:40:15.551Z] #6 [base 3/4] COPY app/package.json ./
+[2026-11-05T09:40:15.551Z] #6 CACHED
+[2026-11-05T09:40:15.551Z] 
+[2026-11-05T09:40:15.551Z] #7 [base 2/4] WORKDIR /app
+[2026-11-05T09:40:15.551Z] #7 CACHED
+[2026-11-05T09:40:15.551Z] 
+[2026-11-05T09:40:15.551Z] #8 [base 4/4] COPY app/src ./src
+[2026-11-05T09:40:15.551Z] #8 CACHED
+[2026-11-05T09:40:15.551Z] 
+[2026-11-05T09:40:15.551Z] #9 exporting to image
+[2026-11-05T09:40:15.551Z] #9 exporting layers done
+[2026-11-05T09:40:15.551Z] #9 exporting manifest sha256:3bc66d648dcde8125a78e57640144ef5c95076ca4dd7521d17ea9d4084407bac 0.0s done
+[2026-11-05T09:40:15.551Z] #9 exporting config sha256:949984d2d38900c3efc313aa00957ada7ef73431cecb9a5b59c706c3f3e6ce24 0.0s done
+[2026-11-05T09:40:15.551Z] #9 exporting attestation manifest sha256:e5e21836a45c22ade129ee2e53029334d91b9766f5fb9672c9ab850c555fe64a 0.0s done
+[2026-11-05T09:40:15.551Z] #9 exporting manifest list sha256:b5827024e4dee708cc00aeee46ef943a0c1d7c9015bd80bbc05eb42d71082fca 0.0s done
+[2026-11-05T09:40:15.551Z] #9 naming to docker.io/kaj1/cicd-demo:23 done
+[2026-11-05T09:40:15.551Z] #9 unpacking to docker.io/kaj1/cicd-demo:23 done
+[2026-11-05T09:40:15.802Z] #9 naming to docker.io/kaj1/cicd-demo:latest done
+[2026-11-05T09:40:15.802Z] #9 unpacking to docker.io/kaj1/cicd-demo:latest done
+[2026-11-05T09:40:15.802Z] #9 DONE 0.1s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] withCredentials
+[2026-11-05T09:40:16.045Z] Masking supported pattern matches of $DH_PASS
+[Pipeline] {
+[Pipeline] sh
+[2026-11-05T09:40:16.357Z] + echo ****
+[2026-11-05T09:40:16.357Z] + docker login -u kaj1 --password-stdin
+[2026-11-05T09:40:16.357Z] 
+[2026-11-05T09:40:16.357Z] WARNING! Your credentials are stored unencrypted in '/var/jenkins_home/.docker/config.json'.
+[2026-11-05T09:40:16.357Z] Configure a credential helper to remove this warning. See
+[2026-11-05T09:40:16.357Z] https://docs.docker.com/go/credential-store/
+[2026-11-05T09:40:16.357Z] 
+[2026-11-05T09:40:16.357Z] Login Succeeded
+[2026-11-05T09:40:16.357Z] + docker push kaj1/cicd-demo:23
+[2026-11-05T09:40:16.358Z] The push refers to repository [docker.io/kaj1/cicd-demo]
+[2026-11-05T09:40:16.358Z] 44136fa355b3: Already exists
+[2026-11-05T09:40:16.358Z] 537c10a6fac8: Waiting
+[2026-11-05T09:40:16.358Z] 6a0ac1617861: Layer already exists
+[2026-11-05T09:40:16.358Z] b2cbbfe903b0: Layer already exists
+[2026-11-05T09:40:16.358Z] 91994166a592: Layer already exists
+[2026-11-05T09:40:16.358Z] 36f50150ab6a: Layer already exists
+[2026-11-05T09:40:16.358Z] ef3759527dad: Layer already exists
+[2026-11-05T09:40:16.358Z] 4feea04c1543: Layer already exists
+[2026-11-05T09:40:16.358Z] fff4e2c1b189: Layer already exists
+[2026-11-05T09:40:17.270Z] 537c10a6fac8: Pushed
+[2026-11-05T09:40:19.133Z] 23: digest: sha256:b5827024e4dee708cc00aeee46ef943a0c1d7c9015bd80bbc05eb42d71082fca size: 856
+[2026-11-05T09:40:19.133Z] + docker push kaj1/cicd-demo:latest
+[2026-11-05T09:40:19.133Z] The push refers to repository [docker.io/kaj1/cicd-demo]
+[2026-11-05T09:40:19.383Z] 36f50150ab6a: Layer already exists
+[2026-11-05T09:40:19.383Z] 537c10a6fac8: Already exists
+[2026-11-05T09:40:19.383Z] 6a0ac1617861: Layer already exists
+[2026-11-05T09:40:19.383Z] 44136fa355b3: Already exists
+[2026-11-05T09:40:19.383Z] fff4e2c1b189: Layer already exists
+[2026-11-05T09:40:19.383Z] ef3759527dad: Layer already exists
+[2026-11-05T09:40:19.383Z] 4feea04c1543: Layer already exists
+[2026-11-05T09:40:19.383Z] b2cbbfe903b0: Layer already exists
+[2026-11-05T09:40:19.383Z] 91994166a592: Layer already exists
+[2026-11-05T09:40:20.727Z] latest: digest: sha256:b5827024e4dee708cc00aeee46ef943a0c1d7c9015bd80bbc05eb42d71082fca size: 856
+[2026-11-05T09:40:20.727Z] + docker logout
+[2026-11-05T09:40:20.727Z] Removing login credentials for https://index.docker.io/v1/
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-11-05T09:40:21.204Z] + docker service inspect cicd_app --format {{.Spec.TaskTemplate.ContainerSpec.Image}}
+[Pipeline] echo
+[2026-11-05T09:40:21.244Z] previous release: kaj1/cicd-demo:21@sha256:95f2e84ba54dab3ca6cae2f5486a47570b1afd785691df311bf62f0e8ed5dfda
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:40:21.569Z] + IMAGE_TAG=23 docker stack deploy -c docker-stack.yml cicd
+[2026-11-05T09:40:21.569Z] Since --detach=false was not specified, tasks will be created in the background.
+[2026-11-05T09:40:21.569Z] In a future release, --detach=false will become the default.
+[2026-11-05T09:40:21.569Z] Updating service cicd_app (id: ecva2m9wjerkvoqcpvjp77pig)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Smoke test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:40:22.069Z] + bash scripts/smoke-test.sh 23 b360add
+[2026-11-05T09:40:22.321Z] attempt 1/60: HTTP 200 build=21 commit=421e443 (consecutive matches 0/10)
+[2026-11-05T09:40:24.805Z] attempt 2/60: HTTP 200 build=21 commit=421e443 (consecutive matches 0/10)
+[2026-11-05T09:40:27.289Z] attempt 3/60: HTTP 200 build=21 commit=421e443 (consecutive matches 0/10)
+[2026-11-05T09:40:29.773Z] attempt 4/60: HTTP 200 build=23 commit=b360add (consecutive matches 1/10)
+[2026-11-05T09:40:31.635Z] attempt 5/60: HTTP 200 build=21 commit=421e443 (consecutive matches 0/10)
+[2026-11-05T09:40:34.119Z] attempt 6/60: HTTP 200 build=23 commit=b360add (consecutive matches 1/10)
+[2026-11-05T09:40:36.603Z] attempt 7/60: HTTP 200 build=21 commit=421e443 (consecutive matches 0/10)
+[2026-11-05T09:40:38.465Z] attempt 8/60: HTTP 200 build=23 commit=b360add (consecutive matches 1/10)
+[2026-11-05T09:40:40.949Z] attempt 9/60: HTTP 200 build=23 commit=b360add (consecutive matches 2/10)
+[2026-11-05T09:40:43.432Z] attempt 10/60: HTTP 200 build=23 commit=b360add (consecutive matches 3/10)
+[2026-11-05T09:40:45.916Z] attempt 11/60: HTTP 200 build=23 commit=b360add (consecutive matches 4/10)
+[2026-11-05T09:40:47.778Z] attempt 12/60: HTTP 200 build=23 commit=b360add (consecutive matches 5/10)
+[2026-11-05T09:40:50.262Z] attempt 13/60: HTTP 200 build=23 commit=b360add (consecutive matches 6/10)
+[2026-11-05T09:40:52.746Z] attempt 14/60: HTTP 200 build=23 commit=b360add (consecutive matches 7/10)
+[2026-11-05T09:40:54.608Z] attempt 15/60: HTTP 200 build=23 commit=b360add (consecutive matches 8/10)
+[2026-11-05T09:40:57.092Z] attempt 16/60: HTTP 200 build=23 commit=b360add (consecutive matches 9/10)
+[2026-11-05T09:40:59.575Z] attempt 17/60: HTTP 200 build=23 commit=b360add (consecutive matches 10/10)
+[2026-11-05T09:40:59.575Z] OK: /version reports build 23 commit b360add 10 times in a row
+[2026-11-05T09:40:59.575Z] /health -> HTTP 200 {"status":"ok"}  HTTP/1.1 200 OK
+[2026-11-05T09:40:59.575Z] /api/greet?name=Smoke -> HTTP 200 {"ok":true,"message":"Hello, Smoke!"}
+[2026-11-05T09:40:59.826Z] replicas running kaj1/cicd-demo:23: 2 of 2
+[2026-11-05T09:40:59.826Z] SMOKE TEST PASSED: build 23 (commit b360add) is serving on all 2 replicas
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-11-05T09:41:00.195Z] + docker image prune -f
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-05T09:41:00.302Z] SUCCESS: build 23 (commit b360add) deployed and verified
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

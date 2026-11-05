@@ -1,0 +1,39 @@
+== Preconditions (the script is safe to re-run only from a clean, synced main)
+PASS: P1 the app is serving the last build (#27) (got 27)
+PASS: P2 all replicas are running (got 2/2)
+PASS: P3 the app serves the commit at HEAD (the last push has been built and deployed) (got 48e1d6a)
+
+== Scenario 1: push a commit that breaks the greeting tests
+build #28 result: FAILURE (full console log: evidence/demo-20261105-214929/scenario1-broken-release.console.log)
+[2026-11-05T21:50:14.084Z] #10 1.534 ℹ pass 10
+[2026-11-05T21:50:14.084Z] #10 1.534 ℹ fail 5
+Stage "Build" skipped due to earlier failure(s)
+Stage "Scan" skipped due to earlier failure(s)
+Stage "Push" skipped due to earlier failure(s)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
+PASS: B1 the broken build failed (got FAILURE)
+PASS: B2 tests failed (the fail count is not 0) (got yes)
+PASS: B3 build description names the stage (got 1)
+PASS: B4 the Deploy stage never ran (no previous-release line in the log) (got no)
+PASS: B5 the running image is unchanged (got kaj1/cicd-demo:27@sha256:dc515d6414791d97a9033b5ec198dee4ec2b4cba2ee6952a9c132657e07bdded)
+PASS: B6 the old build (#27) is still serving (got 27)
+PASS: B7 all replicas are running (got 2/2)
+
+== Scenario 2: revert the bad commit
+build #29 result: SUCCESS (full console log: evidence/demo-20261105-214929/scenario2-revert.console.log)
+[2026-11-05T21:51:13.779Z] #10 1.351 ℹ pass 15
+[2026-11-05T21:51:13.779Z] #10 1.351 ℹ fail 0
+[2026-11-05T21:52:04.218Z] replicas running kaj1/cicd-demo:29: 2 of 2
+[2026-11-05T21:52:04.469Z] replicas running digest sha256:a233a06f7455...: 2 of 2
+[2026-11-05T21:52:04.469Z] SMOKE TEST PASSED: build 29 (commit 412240c) is serving on all 2 replicas
+Finished: SUCCESS
+PASS: R1 the revert build succeeded (got SUCCESS)
+PASS: R2 build description confirms deployment (got 1)
+PASS: R3 the app serves the new build (#29) (got 29)
+PASS: R4 the app serves the reverted commit (412240c) (got 412240c)
+PASS: R5 the service runs image tag 29 (got 29)
+PASS: R6 all replicas are running (got 2/2)
+
+RESULT: 16 passed, 0 failed

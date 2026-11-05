@@ -1,0 +1,37 @@
+== Preconditions (the script is safe to re-run only from a clean, synced main)
+PASS: P1 the app is serving the last build (#21) (got 21)
+PASS: P2 all replicas are running (got 2/2)
+PASS: P3 the app serves the commit at HEAD (the last push has been built and deployed) (got 421e443)
+
+== Scenario 1: push a commit that breaks the greeting tests
+build #22 result: FAILURE (full console log: evidence/demo-20261105-093811/scenario1-broken-release.console.log)
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ pass 10
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ fail 5
+Stage "Build" skipped due to earlier failure(s)
+Stage "Push" skipped due to earlier failure(s)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
+PASS: B1 the broken build failed (got FAILURE)
+PASS: B2 tests failed (the fail count is not 0) (got yes)
+PASS: B3 build description names the stage (got 1)
+PASS: B4 the Deploy stage never ran (no previous-release line in the log) (got no)
+PASS: B5 the running image is unchanged (got kaj1/cicd-demo:21@sha256:95f2e84ba54dab3ca6cae2f5486a47570b1afd785691df311bf62f0e8ed5dfda)
+PASS: B6 the old build (#21) is still serving (got 21)
+PASS: B7 all replicas are running (got 2/2)
+
+== Scenario 2: revert the bad commit
+build #23 result: SUCCESS (full console log: evidence/demo-20261105-093811/scenario2-revert.console.log)
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ pass 15
+[2026-11-05T09:40:14.177Z] #10 1.176 ℹ fail 0
+[2026-11-05T09:40:59.826Z] replicas running kaj1/cicd-demo:23: 2 of 2
+[2026-11-05T09:40:59.826Z] SMOKE TEST PASSED: build 23 (commit b360add) is serving on all 2 replicas
+Finished: SUCCESS
+PASS: R1 the revert build succeeded (got SUCCESS)
+PASS: R2 build description confirms deployment (got 1)
+PASS: R3 the app serves the new build (#23) (got 23)
+PASS: R4 the app serves the reverted commit (b360add) (got b360add)
+PASS: R5 the service runs image tag 23 (got 23)
+PASS: R6 all replicas are running (got 2/2)
+
+RESULT: 16 passed, 0 failed

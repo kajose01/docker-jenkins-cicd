@@ -1,0 +1,39 @@
+== Preconditions (the script is safe to re-run only from a clean, synced main)
+PASS: P1 the app is serving the last build (#24) (got 24)
+PASS: P2 all replicas are running (got 2/2)
+PASS: P3 the app serves the commit at HEAD (the last push has been built and deployed) (got ce64094)
+
+== Scenario 1: push a commit that breaks the greeting tests
+build #25 result: FAILURE (full console log: evidence/demo-20261105-213207/scenario1-broken-release.console.log)
+[2026-11-05T21:33:12.992Z] #10 1.815 ℹ pass 10
+[2026-11-05T21:33:12.992Z] #10 1.815 ℹ fail 5
+Stage "Build" skipped due to earlier failure(s)
+Stage "Scan" skipped due to earlier failure(s)
+Stage "Push" skipped due to earlier failure(s)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
+PASS: B1 the broken build failed (got FAILURE)
+PASS: B2 tests failed (the fail count is not 0) (got yes)
+PASS: B3 build description names the stage (got 1)
+PASS: B4 the Deploy stage never ran (no previous-release line in the log) (got no)
+PASS: B5 the running image is unchanged (got kaj1/cicd-demo:24@sha256:40a1f68475962ad0863c5fb1a2391d3c9c95c337f548b127fab759be8ec67f9d)
+PASS: B6 the old build (#24) is still serving (got 24)
+PASS: B7 all replicas are running (got 2/2)
+
+== Scenario 2: revert the bad commit
+build #26 result: SUCCESS (full console log: evidence/demo-20261105-213207/scenario2-revert.console.log)
+[2026-11-05T21:34:11.092Z] #10 0.907 ℹ pass 15
+[2026-11-05T21:34:11.092Z] #10 0.907 ℹ fail 0
+[2026-11-05T21:35:00.800Z] replicas running kaj1/cicd-demo:26: 2 of 2
+[2026-11-05T21:35:00.800Z] replicas running digest sha256:0e8f8b728086...: 2 of 2
+[2026-11-05T21:35:00.800Z] SMOKE TEST PASSED: build 26 (commit e52f71f) is serving on all 2 replicas
+Finished: SUCCESS
+PASS: R1 the revert build succeeded (got SUCCESS)
+PASS: R2 build description confirms deployment (got 1)
+PASS: R3 the app serves the new build (#26) (got 26)
+PASS: R4 the app serves the reverted commit (e52f71f) (got e52f71f)
+PASS: R5 the service runs image tag 26 (got 26)
+PASS: R6 all replicas are running (got 2/2)
+
+RESULT: 16 passed, 0 failed

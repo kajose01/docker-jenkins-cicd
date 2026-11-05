@@ -1,0 +1,443 @@
+Started by an SCM change
+Checking out git https://github.com/kajose01/docker-jenkins-cicd.git into /var/jenkins_home/workspace/docker-cicd@script/bfae40a243df280c1498b07a3775fbeac3272f6119f377d7adedea958736d80e to read Jenkinsfile
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/docker-cicd@script/bfae40a243df280c1498b07a3775fbeac3272f6119f377d7adedea958736d80e/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kajose01/docker-jenkins-cicd.git # timeout=10
+Fetching upstream changes from https://github.com/kajose01/docker-jenkins-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/kajose01/docker-jenkins-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 488d14c1e3ff4783ea3a00fa27517a308f750851 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 488d14c1e3ff4783ea3a00fa27517a308f750851 # timeout=10
+Commit message: "Change greeting text (breaks the tests on purpose)"
+ > git rev-list --no-walk 421e44325e267313d5b6077b1c0a9def0490c6e7 # timeout=10
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/docker-cicd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/docker-cicd/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kajose01/docker-jenkins-cicd.git # timeout=10
+Fetching upstream changes from https://github.com/kajose01/docker-jenkins-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/kajose01/docker-jenkins-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 488d14c1e3ff4783ea3a00fa27517a308f750851 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 488d14c1e3ff4783ea3a00fa27517a308f750851 # timeout=10
+Commit message: "Change greeting text (breaks the tests on purpose)"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-11-05T09:39:12.480Z] Timeout set to expire in 20 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] checkout
+[2026-11-05T09:39:12.773Z] The recommended git tool is: NONE
+[2026-11-05T09:39:12.773Z] No credentials specified
+[2026-11-05T09:39:12.774Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/docker-cicd/.git # timeout=10
+[2026-11-05T09:39:12.790Z] Fetching changes from the remote Git repository
+[2026-11-05T09:39:12.794Z]  > git config remote.origin.url https://github.com/kajose01/docker-jenkins-cicd.git # timeout=10
+[2026-11-05T09:39:12.805Z] Fetching upstream changes from https://github.com/kajose01/docker-jenkins-cicd.git
+[2026-11-05T09:39:12.806Z]  > git --version # timeout=10
+[2026-11-05T09:39:12.810Z]  > git --version # 'git version 2.47.3'
+[2026-11-05T09:39:12.810Z]  > git fetch --tags --force --progress -- https://github.com/kajose01/docker-jenkins-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-11-05T09:39:12.977Z]  > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+[2026-11-05T09:39:12.982Z] Checking out Revision 488d14c1e3ff4783ea3a00fa27517a308f750851 (refs/remotes/origin/main)
+[2026-11-05T09:39:12.982Z]  > git config core.sparsecheckout # timeout=10
+[2026-11-05T09:39:12.988Z]  > git checkout -f 488d14c1e3ff4783ea3a00fa27517a308f750851 # timeout=10
+[2026-11-05T09:39:12.997Z] Commit message: "Change greeting text (breaks the tests on purpose)"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-11-05T09:39:13.361Z] + git rev-parse --short HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:39:13.707Z] + echo building commit 488d14c as build 22
+[2026-11-05T09:39:13.707Z] building commit 488d14c as build 22
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-05T09:39:14.267Z] + rm -rf reports
+[2026-11-05T09:39:14.267Z] + docker build --progress=plain --no-cache-filter test --target test-report --output type=local,dest=reports .
+[2026-11-05T09:39:14.534Z] #0 building with "default" instance using docker driver
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #1 [internal] load build definition from Dockerfile
+[2026-11-05T09:39:14.534Z] #1 transferring dockerfile: 938B done
+[2026-11-05T09:39:14.534Z] #1 DONE 0.0s
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #2 [internal] load metadata for docker.io/library/node:20-alpine
+[2026-11-05T09:39:14.534Z] #2 DONE 0.1s
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #3 [internal] load .dockerignore
+[2026-11-05T09:39:14.534Z] #3 transferring context: 96B done
+[2026-11-05T09:39:14.534Z] #3 DONE 0.0s
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #4 [internal] load build context
+[2026-11-05T09:39:14.534Z] #4 DONE 0.0s
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #5 [base 1/4] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-11-05T09:39:14.534Z] #5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-11-05T09:39:14.534Z] #5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+[2026-11-05T09:39:14.534Z] #5 DONE 0.0s
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #4 [internal] load build context
+[2026-11-05T09:39:14.534Z] #4 transferring context: 5.02kB done
+[2026-11-05T09:39:14.534Z] #4 DONE 0.0s
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #6 [base 2/4] WORKDIR /app
+[2026-11-05T09:39:14.534Z] #6 CACHED
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #7 [base 3/4] COPY app/package.json ./
+[2026-11-05T09:39:14.534Z] #7 CACHED
+[2026-11-05T09:39:14.534Z] 
+[2026-11-05T09:39:14.534Z] #8 [base 4/4] COPY app/src ./src
+[2026-11-05T09:39:14.534Z] #8 DONE 0.1s
+[2026-11-05T09:39:14.785Z] 
+[2026-11-05T09:39:14.785Z] #9 [test 1/2] COPY app/test ./test
+[2026-11-05T09:39:14.785Z] #9 DONE 0.0s
+[2026-11-05T09:39:14.785Z] 
+[2026-11-05T09:39:14.785Z] #10 [test 2/2] RUN mkdir -p report;     npm run test:ci > report/test-output.txt 2>&1; echo $? > report/exit-code;     cat report/test-output.txt;     true
+[2026-11-05T09:39:17.270Z] #10 2.317 
+[2026-11-05T09:39:17.270Z] #10 2.317 > cicd-demo@1.0.0 test:ci
+[2026-11-05T09:39:17.270Z] #10 2.317 > node --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=report/junit.xml
+[2026-11-05T09:39:17.270Z] #10 2.317 
+[2026-11-05T09:39:17.270Z] #10 2.317 ▶ greeting()
+[2026-11-05T09:39:17.270Z] #10 2.317   ✖ defaults to world when no name is given (26.077737ms)
+[2026-11-05T09:39:17.271Z] #10 2.317     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.271Z] #10 2.317     + actual - expected
+[2026-11-05T09:39:17.271Z] #10 2.317     
+[2026-11-05T09:39:17.271Z] #10 2.317     + 'Hi, world!'
+[2026-11-05T09:39:17.271Z] #10 2.317     - 'Hello, world!'
+[2026-11-05T09:39:17.271Z] #10 2.317         at TestContext.<anonymous> (/app/test/app.test.js:8:12)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.runInAsyncScope (node:async_hooks:206:9)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.run (node:internal/test_runner/test:796:25)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.start (node:internal/test_runner/test:702:17)
+[2026-11-05T09:39:17.271Z] #10 2.317         at node:internal/test_runner/test:1133:71
+[2026-11-05T09:39:17.271Z] #10 2.317         at node:internal/per_context/primordials:482:82
+[2026-11-05T09:39:17.271Z] #10 2.317         at new Promise (<anonymous>)
+[2026-11-05T09:39:17.271Z] #10 2.317         at new SafePromise (node:internal/per_context/primordials:450:29)
+[2026-11-05T09:39:17.271Z] #10 2.317         at node:internal/per_context/primordials:482:9
+[2026-11-05T09:39:17.271Z] #10 2.317         at Array.map (<anonymous>) {
+[2026-11-05T09:39:17.271Z] #10 2.317       generatedMessage: true,
+[2026-11-05T09:39:17.271Z] #10 2.317       code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.271Z] #10 2.317       actual: 'Hi, world!',
+[2026-11-05T09:39:17.271Z] #10 2.317       expected: 'Hello, world!',
+[2026-11-05T09:39:17.271Z] #10 2.317       operator: 'strictEqual'
+[2026-11-05T09:39:17.271Z] #10 2.317     }
+[2026-11-05T09:39:17.271Z] #10 2.317 
+[2026-11-05T09:39:17.271Z] #10 2.317   ✖ treats null, empty and whitespace-only names as world (3.77158ms)
+[2026-11-05T09:39:17.271Z] #10 2.317     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.271Z] #10 2.317     + actual - expected
+[2026-11-05T09:39:17.271Z] #10 2.317     
+[2026-11-05T09:39:17.271Z] #10 2.317     + 'Hi, world!'
+[2026-11-05T09:39:17.271Z] #10 2.317     - 'Hello, world!'
+[2026-11-05T09:39:17.271Z] #10 2.317         at TestContext.<anonymous> (/app/test/app.test.js:11:47)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.runInAsyncScope (node:async_hooks:206:9)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.run (node:internal/test_runner/test:796:25)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Suite.processPendingSubtests (node:internal/test_runner/test:526:18)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.postRun (node:internal/test_runner/test:889:19)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.run (node:internal/test_runner/test:835:12)
+[2026-11-05T09:39:17.271Z] #10 2.317         at async Promise.all (index 0)
+[2026-11-05T09:39:17.271Z] #10 2.317         at async Suite.run (node:internal/test_runner/test:1135:7)
+[2026-11-05T09:39:17.271Z] #10 2.317         at async Test.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.271Z] #10 2.317       generatedMessage: true,
+[2026-11-05T09:39:17.271Z] #10 2.317       code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.271Z] #10 2.317       actual: 'Hi, world!',
+[2026-11-05T09:39:17.271Z] #10 2.317       expected: 'Hello, world!',
+[2026-11-05T09:39:17.271Z] #10 2.317       operator: 'strictEqual'
+[2026-11-05T09:39:17.271Z] #10 2.317     }
+[2026-11-05T09:39:17.271Z] #10 2.317 
+[2026-11-05T09:39:17.271Z] #10 2.317   ✖ trims the name (0.336153ms)
+[2026-11-05T09:39:17.271Z] #10 2.317     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.271Z] #10 2.317     + actual - expected
+[2026-11-05T09:39:17.271Z] #10 2.317     
+[2026-11-05T09:39:17.271Z] #10 2.317     + 'Hi, Josephine!'
+[2026-11-05T09:39:17.271Z] #10 2.317     - 'Hello, Josephine!'
+[2026-11-05T09:39:17.271Z] #10 2.317         at TestContext.<anonymous> (/app/test/app.test.js:14:12)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.runInAsyncScope (node:async_hooks:206:9)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.run (node:internal/test_runner/test:796:25)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Suite.processPendingSubtests (node:internal/test_runner/test:526:18)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.postRun (node:internal/test_runner/test:889:19)
+[2026-11-05T09:39:17.271Z] #10 2.317         at Test.run (node:internal/test_runner/test:835:12)
+[2026-11-05T09:39:17.271Z] #10 2.317         at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.271Z] #10 2.317       generatedMessage: true,
+[2026-11-05T09:39:17.271Z] #10 2.317       code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.271Z] #10 2.317       actual: 'Hi, Josephine!',
+[2026-11-05T09:39:17.271Z] #10 2.317       expected: 'Hello, Josephine!',
+[2026-11-05T09:39:17.271Z] #10 2.317       operator: 'strictEqual'
+[2026-11-05T09:39:17.271Z] #10 2.317     }
+[2026-11-05T09:39:17.271Z] #10 2.317 
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ accepts exactly 30 characters and rejects 31 (3.067294ms)
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ accepts letters from other alphabets, digits, space, underscore and hyphen (0.299155ms)
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ rejects markup and other special characters (0.238827ms)
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ rejects malformed input: embedded newline, object, array (3.058923ms)
+[2026-11-05T09:39:17.271Z] #10 2.317 ✖ greeting() (45.468513ms)
+[2026-11-05T09:39:17.271Z] #10 2.317 ▶ HTTP server
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ GET /health returns 200 and status ok (157.306906ms)
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ GET /version reports the build metadata injected through the environment (9.932347ms)
+[2026-11-05T09:39:17.271Z] #10 2.317   ✔ GET /version falls back to dev/unknown when no metadata is injected (15.251181ms)
+[2026-11-05T09:39:17.271Z] #10 2.317   ✖ GET /api/greet returns 200 with a greeting (8.248818ms)
+[2026-11-05T09:39:17.271Z] #10 2.317     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.271Z] #10 2.317     + actual - expected
+[2026-11-05T09:39:17.271Z] #10 2.317     
+[2026-11-05T09:39:17.271Z] #10 2.317     + 'Hi, Ana!'
+[2026-11-05T09:39:17.271Z] #10 2.317     - 'Hello, Ana!'
+[2026-11-05T09:39:17.271Z] #10 2.317         at TestContext.<anonymous> (/app/test/app.test.js:77:12)
+[2026-11-05T09:39:17.271Z] #10 2.317         at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2026-11-05T09:39:17.271Z] #10 2.317         at async Test.run (node:internal/test_runner/test:797:9)
+[2026-11-05T09:39:17.271Z] #10 2.317         at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.271Z] #10 2.317       generatedMessage: true,
+[2026-11-05T09:39:17.271Z] #10 2.317       code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.271Z] #10 2.317       actual: 'Hi, Ana!',
+[2026-11-05T09:39:17.271Z] #10 2.317       expected: 'Hello, Ana!',
+[2026-11-05T09:39:17.271Z] #10 2.317       operator: 'strictEqual'
+[2026-11-05T09:39:17.271Z] #10 2.317     }
+[2026-11-05T09:39:17.271Z] #10 2.317 
+[2026-11-05T09:39:17.271Z] #10 2.317   ✖ GET /api/greet without a name greets the world (5.872315ms)
+[2026-11-05T09:39:17.271Z] #10 2.317     AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.272Z] #10 2.317     + actual - expected
+[2026-11-05T09:39:17.272Z] #10 2.317     
+[2026-11-05T09:39:17.272Z] #10 2.317     + 'Hi, world!'
+[2026-11-05T09:39:17.272Z] #10 2.317     - 'Hello, world!'
+[2026-11-05T09:39:17.272Z] #10 2.317         at TestContext.<anonymous> (/app/test/app.test.js:83:12)
+[2026-11-05T09:39:17.272Z] #10 2.317         at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2026-11-05T09:39:17.272Z] #10 2.317         at async Test.run (node:internal/test_runner/test:797:9)
+[2026-11-05T09:39:17.272Z] #10 2.317         at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.272Z] #10 2.317       generatedMessage: true,
+[2026-11-05T09:39:17.272Z] #10 2.317       code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.272Z] #10 2.317       actual: 'Hi, world!',
+[2026-11-05T09:39:17.272Z] #10 2.317       expected: 'Hello, world!',
+[2026-11-05T09:39:17.272Z] #10 2.317       operator: 'strictEqual'
+[2026-11-05T09:39:17.272Z] #10 2.317     }
+[2026-11-05T09:39:17.272Z] #10 2.317 
+[2026-11-05T09:39:17.272Z] #10 2.317   ✔ GET /api/greet returns 400 with an error for invalid names (12.318224ms)
+[2026-11-05T09:39:17.272Z] #10 2.317   ✔ survives malformed requests and keeps serving (14.832249ms)
+[2026-11-05T09:39:17.272Z] #10 2.317   ✔ returns 404 with a JSON error for unknown routes (6.470015ms)
+[2026-11-05T09:39:17.272Z] #10 2.317 ✖ HTTP server (260.006085ms)
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ tests 15
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ suites 2
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ pass 10
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ fail 5
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ cancelled 0
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ skipped 0
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ todo 0
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ duration_ms 822.17039
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ start of coverage report
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ -----------------------------------------------------------------
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ file             | line % | branch % | funcs % | uncovered lines
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ -----------------------------------------------------------------
+[2026-11-05T09:39:17.272Z] #10 2.317 ℹ src/lib.js       | 100.00 |    87.50 |  100.00 | 
+[2026-11-05T09:39:17.275Z] #10 2.317 ℹ src/server.js    |  92.59 |    93.33 |   75.00 | 25-26
+[2026-11-05T09:39:17.275Z] #10 2.317 ℹ test/app.test.js | 100.00 |    86.67 |  100.00 | 
+[2026-11-05T09:39:17.275Z] #10 2.317 ℹ -----------------------------------------------------------------
+[2026-11-05T09:39:17.275Z] #10 2.317 ℹ all files        |  98.61 |    88.68 |   96.00 |
+[2026-11-05T09:39:17.275Z] #10 2.317 ℹ -----------------------------------------------------------------
+[2026-11-05T09:39:17.275Z] #10 2.317 ℹ end of coverage report
+[2026-11-05T09:39:17.275Z] #10 2.317 
+[2026-11-05T09:39:17.275Z] #10 2.317 ✖ failing tests:
+[2026-11-05T09:39:17.275Z] #10 2.317 
+[2026-11-05T09:39:17.275Z] #10 2.317 test at test/app.test.js:7:3
+[2026-11-05T09:39:17.275Z] #10 2.317 ✖ defaults to world when no name is given (26.077737ms)
+[2026-11-05T09:39:17.275Z] #10 2.317   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.275Z] #10 2.317   + actual - expected
+[2026-11-05T09:39:17.275Z] #10 2.317   
+[2026-11-05T09:39:17.275Z] #10 2.317   + 'Hi, world!'
+[2026-11-05T09:39:17.275Z] #10 2.317   - 'Hello, world!'
+[2026-11-05T09:39:17.275Z] #10 2.317       at TestContext.<anonymous> (/app/test/app.test.js:8:12)
+[2026-11-05T09:39:17.275Z] #10 2.317       at Test.runInAsyncScope (node:async_hooks:206:9)
+[2026-11-05T09:39:17.275Z] #10 2.317       at Test.run (node:internal/test_runner/test:796:25)
+[2026-11-05T09:39:17.275Z] #10 2.317       at Test.start (node:internal/test_runner/test:702:17)
+[2026-11-05T09:39:17.275Z] #10 2.317       at node:internal/test_runner/test:1133:71
+[2026-11-05T09:39:17.275Z] #10 2.317       at node:internal/per_context/primordials:482:82
+[2026-11-05T09:39:17.275Z] #10 2.317       at new Promise (<anonymous>)
+[2026-11-05T09:39:17.275Z] #10 2.317       at new SafePromise (node:internal/per_context/primordials:450:29)
+[2026-11-05T09:39:17.275Z] #10 2.317       at node:internal/per_context/primordials:482:9
+[2026-11-05T09:39:17.275Z] #10 2.317       at Array.map (<anonymous>) {
+[2026-11-05T09:39:17.275Z] #10 2.317     generatedMessage: true,
+[2026-11-05T09:39:17.275Z] #10 2.317     code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.275Z] #10 2.317     actual: 'Hi, world!',
+[2026-11-05T09:39:17.275Z] #10 2.317     expected: 'Hello, world!',
+[2026-11-05T09:39:17.275Z] #10 2.317     operator: 'strictEqual'
+[2026-11-05T09:39:17.275Z] #10 2.317   }
+[2026-11-05T09:39:17.276Z] #10 2.317 
+[2026-11-05T09:39:17.276Z] #10 2.317 test at test/app.test.js:10:3
+[2026-11-05T09:39:17.276Z] #10 2.317 ✖ treats null, empty and whitespace-only names as world (3.77158ms)
+[2026-11-05T09:39:17.276Z] #10 2.317   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.276Z] #10 2.317   + actual - expected
+[2026-11-05T09:39:17.276Z] #10 2.317   
+[2026-11-05T09:39:17.276Z] #10 2.317   + 'Hi, world!'
+[2026-11-05T09:39:17.276Z] #10 2.317   - 'Hello, world!'
+[2026-11-05T09:39:17.276Z] #10 2.317       at TestContext.<anonymous> (/app/test/app.test.js:11:47)
+[2026-11-05T09:39:17.276Z] #10 2.317       at Test.runInAsyncScope (node:async_hooks:206:9)
+[2026-11-05T09:39:17.276Z] #10 2.317       at Test.run (node:internal/test_runner/test:796:25)
+[2026-11-05T09:39:17.276Z] #10 2.317       at Suite.processPendingSubtests (node:internal/test_runner/test:526:18)
+[2026-11-05T09:39:17.276Z] #10 2.317       at Test.postRun (node:internal/test_runner/test:889:19)
+[2026-11-05T09:39:17.276Z] #10 2.317       at Test.run (node:internal/test_runner/test:835:12)
+[2026-11-05T09:39:17.276Z] #10 2.317       at async Promise.all (index 0)
+[2026-11-05T09:39:17.276Z] #10 2.317       at async Suite.run (node:internal/test_runner/test:1135:7)
+[2026-11-05T09:39:17.276Z] #10 2.317       at async Test.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.276Z] #10 2.317     generatedMessage: true,
+[2026-11-05T09:39:17.276Z] #10 2.317     code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.279Z] #10 2.317     actual: 'Hi, world!',
+[2026-11-05T09:39:17.279Z] #10 2.317     expected: 'Hello, world!',
+[2026-11-05T09:39:17.279Z] #10 2.317     operator: 'strictEqual'
+[2026-11-05T09:39:17.279Z] #10 2.317   }
+[2026-11-05T09:39:17.279Z] #10 2.317 
+[2026-11-05T09:39:17.279Z] #10 2.317 test at test/app.test.js:13:3
+[2026-11-05T09:39:17.279Z] #10 2.317 ✖ trims the name (0.336153ms)
+[2026-11-05T09:39:17.279Z] #10 2.317   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.279Z] #10 2.317   + actual - expected
+[2026-11-05T09:39:17.279Z] #10 2.317   
+[2026-11-05T09:39:17.279Z] #10 2.317   + 'Hi, Josephine!'
+[2026-11-05T09:39:17.279Z] #10 2.317   - 'Hello, Josephine!'
+[2026-11-05T09:39:17.279Z] #10 2.317       at TestContext.<anonymous> (/app/test/app.test.js:14:12)
+[2026-11-05T09:39:17.279Z] #10 2.317       at Test.runInAsyncScope (node:async_hooks:206:9)
+[2026-11-05T09:39:17.279Z] #10 2.317       at Test.run (node:internal/test_runner/test:796:25)
+[2026-11-05T09:39:17.279Z] #10 2.317       at Suite.processPendingSubtests (node:internal/test_runner/test:526:18)
+[2026-11-05T09:39:17.279Z] #10 2.317       at Test.postRun (node:internal/test_runner/test:889:19)
+[2026-11-05T09:39:17.279Z] #10 2.317       at Test.run (node:internal/test_runner/test:835:12)
+[2026-11-05T09:39:17.279Z] #10 2.317       at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.279Z] #10 2.317     generatedMessage: true,
+[2026-11-05T09:39:17.279Z] #10 2.317     code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.279Z] #10 2.317     actual: 'Hi, Josephine!',
+[2026-11-05T09:39:17.279Z] #10 2.317     expected: 'Hello, Josephine!',
+[2026-11-05T09:39:17.279Z] #10 2.317     operator: 'strictEqual'
+[2026-11-05T09:39:17.279Z] #10 2.317   }
+[2026-11-05T09:39:17.279Z] #10 2.317 
+[2026-11-05T09:39:17.279Z] #10 2.317 test at test/app.test.js:74:3
+[2026-11-05T09:39:17.279Z] #10 2.317 ✖ GET /api/greet returns 200 with a greeting (8.248818ms)
+[2026-11-05T09:39:17.279Z] #10 2.317   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.279Z] #10 2.317   + actual - expected
+[2026-11-05T09:39:17.279Z] #10 2.317   
+[2026-11-05T09:39:17.279Z] #10 2.317   + 'Hi, Ana!'
+[2026-11-05T09:39:17.279Z] #10 2.317   - 'Hello, Ana!'
+[2026-11-05T09:39:17.279Z] #10 2.317       at TestContext.<anonymous> (/app/test/app.test.js:77:12)
+[2026-11-05T09:39:17.279Z] #10 2.317       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2026-11-05T09:39:17.279Z] #10 2.317       at async Test.run (node:internal/test_runner/test:797:9)
+[2026-11-05T09:39:17.279Z] #10 2.317       at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.279Z] #10 2.317     generatedMessage: true,
+[2026-11-05T09:39:17.279Z] #10 2.317     code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.279Z] #10 2.317     actual: 'Hi, Ana!',
+[2026-11-05T09:39:17.279Z] #10 2.317     expected: 'Hello, Ana!',
+[2026-11-05T09:39:17.279Z] #10 2.317     operator: 'strictEqual'
+[2026-11-05T09:39:17.279Z] #10 2.317   }
+[2026-11-05T09:39:17.279Z] #10 2.317 
+[2026-11-05T09:39:17.280Z] #10 2.317 test at test/app.test.js:80:3
+[2026-11-05T09:39:17.280Z] #10 2.317 ✖ GET /api/greet without a name greets the world (5.872315ms)
+[2026-11-05T09:39:17.280Z] #10 2.317   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+[2026-11-05T09:39:17.280Z] #10 2.317   + actual - expected
+[2026-11-05T09:39:17.280Z] #10 2.317   
+[2026-11-05T09:39:17.280Z] #10 2.317   + 'Hi, world!'
+[2026-11-05T09:39:17.280Z] #10 2.317   - 'Hello, world!'
+[2026-11-05T09:39:17.280Z] #10 2.317       at TestContext.<anonymous> (/app/test/app.test.js:83:12)
+[2026-11-05T09:39:17.280Z] #10 2.317       at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2026-11-05T09:39:17.280Z] #10 2.317       at async Test.run (node:internal/test_runner/test:797:9)
+[2026-11-05T09:39:17.280Z] #10 2.317       at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+[2026-11-05T09:39:17.280Z] #10 2.317     generatedMessage: true,
+[2026-11-05T09:39:17.280Z] #10 2.317     code: 'ERR_ASSERTION',
+[2026-11-05T09:39:17.280Z] #10 2.317     actual: 'Hi, world!',
+[2026-11-05T09:39:17.280Z] #10 2.317     expected: 'Hello, world!',
+[2026-11-05T09:39:17.280Z] #10 2.317     operator: 'strictEqual'
+[2026-11-05T09:39:17.280Z] #10 2.317   }
+[2026-11-05T09:39:17.280Z] #10 2.317 npm notice
+[2026-11-05T09:39:17.280Z] #10 2.317 npm notice New major version of npm available! 10.8.2 -> 12.2.2
+[2026-11-05T09:39:17.280Z] #10 2.317 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+[2026-11-05T09:39:17.280Z] #10 2.317 npm notice To update run: npm install -g npm@12.2.2
+[2026-11-05T09:39:17.280Z] #10 2.317 npm notice
+[2026-11-05T09:39:17.280Z] #10 DONE 2.3s
+[2026-11-05T09:39:17.280Z] 
+[2026-11-05T09:39:17.280Z] #11 [test-report 1/1] COPY --from=test /app/report/ /
+[2026-11-05T09:39:17.280Z] #11 DONE 0.0s
+[2026-11-05T09:39:17.280Z] 
+[2026-11-05T09:39:17.280Z] #12 exporting to client directory
+[2026-11-05T09:39:17.280Z] #12 copying files 18.13kB 0.0s done
+[2026-11-05T09:39:17.280Z] #12 DONE 0.0s
+[Pipeline] junit
+[2026-11-05T09:39:17.304Z] Recording test results
+[2026-11-05T09:39:17.329Z] [Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+[2026-11-05T09:39:17.359Z] Archiving artifacts
+[2026-11-05T09:39:17.364Z] Recording fingerprints
+[Pipeline] sh
+[2026-11-05T09:39:17.664Z] + cat reports/exit-code
+[2026-11-05T09:39:17.664Z] + test 1 = 0
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+Stage "Build" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push)
+Stage "Push" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+Stage "Deploy" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Smoke test)
+Stage "Smoke test" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-11-05T09:39:19.118Z] + docker image prune -f
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-05T09:39:19.260Z] FAILED (test failure, stage Test): no deployment was started, so the running release was not touched
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
