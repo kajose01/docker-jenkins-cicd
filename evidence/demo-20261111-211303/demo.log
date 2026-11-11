@@ -1,0 +1,39 @@
+== Preconditions (the script is safe to re-run only from a clean, synced main)
+PASS: P1 the app is serving the last build (#31) (got 31)
+PASS: P2 all replicas are running (got 2/2)
+PASS: P3 the app serves the commit at HEAD (the last push has been built and deployed) (got 422231e)
+
+== Scenario 1: push a commit that breaks the greeting tests
+build #32 result: FAILURE (full console log: evidence/demo-20261111-211303/scenario1-broken-release.console.log)
+[2026-11-11T21:14:12.753Z] #10 2.482 ℹ pass 10
+[2026-11-11T21:14:12.753Z] #10 2.482 ℹ fail 5
+Stage "Build" skipped due to earlier failure(s)
+Stage "Scan" skipped due to earlier failure(s)
+Stage "Push" skipped due to earlier failure(s)
+Stage "Deploy" skipped due to earlier failure(s)
+Stage "Smoke test" skipped due to earlier failure(s)
+Finished: FAILURE
+PASS: B1 the broken build failed (got FAILURE)
+PASS: B2 tests failed (the fail count is not 0) (got yes)
+PASS: B3 build description names the stage (got 1)
+PASS: B4 the Deploy stage never ran (no previous-release line in the log) (got no)
+PASS: B5 the running image is unchanged (got kaj1/cicd-demo:31@sha256:08e6d633fc21e1ea87a47b11dcc33fc5c096e6cb6c15cc9f99b76669b702f8c6)
+PASS: B6 the old build (#31) is still serving (got 31)
+PASS: B7 all replicas are running (got 2/2)
+
+== Scenario 2: revert the bad commit
+build #33 result: SUCCESS (full console log: evidence/demo-20261111-211303/scenario2-revert.console.log)
+[2026-11-11T21:15:10.101Z] #10 0.908 ℹ pass 15
+[2026-11-11T21:15:10.101Z] #10 0.908 ℹ fail 0
+[2026-11-11T21:15:57.410Z] replicas running kaj1/cicd-demo:33: 2 of 2
+[2026-11-11T21:15:57.410Z] replicas running digest sha256:3239da9d2b17...: 2 of 2
+[2026-11-11T21:15:57.410Z] SMOKE TEST PASSED: build 33 (commit 6ad8630) is serving on all 2 replicas
+Finished: SUCCESS
+PASS: R1 the revert build succeeded (got SUCCESS)
+PASS: R2 build description confirms deployment (got 1)
+PASS: R3 the app serves the new build (#33) (got 33)
+PASS: R4 the app serves the reverted commit (6ad8630) (got 6ad8630)
+PASS: R5 the service runs image tag 33 (got 33)
+PASS: R6 all replicas are running (got 2/2)
+
+RESULT: 16 passed, 0 failed
