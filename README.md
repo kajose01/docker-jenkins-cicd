@@ -100,10 +100,12 @@ Builds 1 to 5 are the original assignment run. Later rows are the changes made a
 | 8 | 62b1d62 | SUCCESS | first run with rollback support and the stronger smoke test, after the token was replaced |
 | 23 | b360add | SUCCESS | Jenkins test report: 15 passed, 0 failed |
 | 24 | ce64094 | SUCCESS | Node 24 base image, Trivy scan with 0 findings, deployed and verified by digest `sha256:40a1f684...` on 2 of 2 replicas, `node --version` in the container `v24.22.2` |
+| 32 | 3e803e5 | FAILURE | final demo run, scenario 1: the greeting was deliberately broken. The Test stage reported 10 passed and 5 failed; Build, Scan, Push, Deploy and Smoke test were skipped. The app kept serving build 31 |
+| 33 | 6ad8630 | SUCCESS | final demo run, scenario 2: the revert was deployed. 15 tests passed, scan clean, deployed as digest `sha256:3239da9d2b17...` on 2 of 2 replicas, `/version` reports build 33 and commit 6ad8630 |
 
 Other results, with their evidence files:
 
-- **Failing test blocked, then revert deployed** (`scripts/demo-failing-test.sh`): the newest run under `evidence/` in a folder whose name starts with `demo-` has the full Jenkins console log of both builds. The run passed 16 of 16 checks: the broken build failed at Test, the Deploy stage never ran, the old build kept serving, and the revert deployed as the next build with the commit that Git reported. `evidence/failing-test-demo.log` is the log of the first version of this demo and is kept as it was.
+- **Failing test blocked, then revert deployed** (`scripts/demo-failing-test.sh`): `evidence/demo-20261111-211303` has the full Jenkins console log of both builds (32 and 33). Older folders with the same prefix come from earlier versions of the script. The run passed 16 of 16 checks: the broken build failed at Test, the Deploy stage never ran, the old build kept serving, and the revert deployed as the next build with the commit that Git reported. `evidence/failing-test-demo.log` is the log of the first version of this demo and is kept as it was.
 - **Jenkins-level rollback** (`evidence/rollback-drill.log`): a release whose tasks run but do not serve the app was deployed. Swarm treated the update as successful, the smoke test failed, and `rollback.sh` restored `kaj1/cicd-demo:6` with 2 of 2 replicas.
 - **Swarm automatic rollback** (`evidence/swarm-rollback.log`): a release that fails its health check was deployed. Swarm reported `rollback_completed` by itself, restored the previous image digest, and all 20 requests to `/version` during the test got HTTP 200. The log shows the outcome; it does not name the exact trigger.
 - **Clean environment** (`evidence/clean-env-test.log`, 5 of 5): a throwaway Jenkins built from the repository boots, creates the `docker-cicd` job from `casc.yaml`, refuses anonymous access, and installs exactly the pinned plugins.
@@ -150,6 +152,7 @@ Other results, with their evidence files:
 - **Image scanning:** every image is scanned before it is pushed. The scanner runs from the `latest` tag of its image, so the version is written into each report (Trivy 0.76.1 for build 24).
 - **Image signing and provenance are not implemented.** Deployment checks the image digest, which proves that the running image is the one that was scanned and pushed, but it does not prove who built it. Signing would need a key management decision that this demo does not make.
 - **Image retention policy** (a documented procedure, not automation): keep the last 10 build tags and the tag of the release currently running, because it is the rollback target. Delete older tags from Docker Hub by hand after checking that none is deployed. `latest` is never deployed; the service uses `tag@digest`.
+- **Not pinned:** the Docker CLI and buildx plugin in the Jenkins image come from Docker's apt repository at build time without exact versions, and Trivy runs from its `latest` tag. Pinning them would need exact apt versions and a scanner version or digest; this repository records the scanner version in each report instead.
 - Back up the Jenkins home volume before upgrading Jenkins, and refresh credentials after any `.env` change by recreating the container (`docker compose up -d --force-recreate jenkins`).
 
 ## 9. Deep Dive: Advantages of Docker in CI/CD
